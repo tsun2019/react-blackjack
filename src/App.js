@@ -75,18 +75,18 @@ class Game extends React.Component {
 
   
   handleHit = () => {
-    const deck = this.state.deck;
-    var playerHand = this.state.playerHand;
+    const newDeck = [...this.state.deck];
+    const playerHand = [...this.state.playerHand];
     
     //deal card
-    playerHand.push(deck.pop());
+    playerHand.push(newDeck.pop());
 
     //five card charlie (the small chance it actually happens)
     
     //houseHand does not change to don't have to setState.
     this.setState({
       playerHand: playerHand,
-      deck: deck,
+      deck: newDeck,
       status: "Yup hitting it worked ;)",
     })
   }
@@ -105,6 +105,7 @@ class Game extends React.Component {
         <Hand hand={this.state.houseHand} dealer={true}/>
         <Interface
           deal={this.handleDeal}
+          hit={this.handleHit}
         />
         <Hand hand ={this.state.playerHand} dealer={false}/>
       </div>
@@ -189,7 +190,7 @@ class Interface extends React.Component {
          
        </div>
        <button onClick={this.props.deal} type="button">Deal</button>
-       <button>Hit</button>
+       <button onClick={this.props.hit} type="button">Hit</button>
        <button>Stand</button>
        <button>Advice</button>
        <button>Restart</button>
