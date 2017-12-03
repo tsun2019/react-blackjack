@@ -17,7 +17,7 @@ class App extends React.Component {
         {v:7,f:"s7"},{v:8,f:"s8"},{v:9,f:"s9"},{v:10,f:"s10"},{v:10,f:"s11"},{v:10,f:"s12"},{v:10,f:"s13"},
         {v:11,f:"d1"},{v:2,f:"d2"},{v:3,f:"d3"},{v:4,f:"d4"},{v:5,f:"d5"},{v:6,f:"d6"},
         {v:7,f:"d7"},{v:8,f:"d8"},{v:9,f:"d9"},{v:10,f:"d10"},{v:10,f:"d11"},{v:10,f:"d12"},{v:10,f:"d13"}
-        ])]
+        ])],
     }; 
   }
 
@@ -28,10 +28,14 @@ class App extends React.Component {
         [deck[i], deck[j]] = [deck[j], deck[i]];
     }
     return deck;
-}
+} 
 
   render() {
-    return (<Game deck={this.state.deck}/>);
+    return (
+    <div>
+      <Game deck={this.shuffle(this.state.deck)}/>
+    </div>
+   );
   }
 }
 
@@ -40,17 +44,25 @@ class Game extends React.Component {
   //constructor for states and talking to other components
   constructor(props) {
     super(props);
-    const newDeck = this.props.deck;
+    const newDeck = [...this.props.deck];
     this.state = {
       deck: newDeck,
       playerHand: [],
       houseHand: [],
-      status: " ",
+      status: "Let's get started!",
     };
   }
 
   //create functions to handle certain events (dealing,hit,stand,restart,advice)
 
+  handleScore = (hand) => {
+    var score = 0;
+    for(var i = 0; i < hand.length; i++){
+      score += hand[i].v;
+    }
+
+    return score;
+  }
   //this function signature is special bc it saves the "this" scope.
   handleDeal = () => {
     const newDeck = [...this.state.deck];
@@ -69,7 +81,7 @@ class Game extends React.Component {
       playerHand : newPlayerHand,
       houseHand: newHouseHand,
       deck: newDeck,
-      status: "In Session",
+      status: "Playing...",
     });
   }
 
@@ -77,69 +89,91 @@ class Game extends React.Component {
   handleHit = () => {
     const newDeck = [...this.state.deck];
     const playerHand = [...this.state.playerHand];
+    var status = this.state.status;
     
     //deal card
     playerHand.push(newDeck.pop());
 
     //five card charlie (the small chance it actually happens)
     
-    //houseHand does not change to don't have to setState.
+    if (this.handleScore(playerHand) > 21){
+      status = "Lose";
+    }
+    //houseHand does not change so don't have to setState.
     this.setState({
       playerHand: playerHand,
       deck: newDeck,
-      status: "Yup hitting it worked ;)",
+      status: status
     })
   }
   
-  // handleStand() {
-  //   var playerHand = this.state.playerHand; 
-  // }
+  handleStand = () => {
+    //change status so something like done to notify when player is done so house can show card and play.
+    this.setState({
+      status: "Done"
+    })
+  }
 
+  handleRestart = () => {
+    const newDeck = [this.props.deck];
+    const playerHand = [];
+    const houseHand = [];
+
+    this.setState({
+      deck: newDeck,
+      playerHand: playerHand,
+      houseHand: houseHand
+    })
+    
+ }
 
 
   render(){
     return (
       //render a status here
       <div>
-        {this.state.status} 
-        <Hand hand={this.state.houseHand} dealer={true}/>
-        <Interface
+        <div>
+          <Hand hand={this.state.houseHand} dealer={true} status={this.state.status}/>
+          <Interface
+          housescore = {this.handleScore(this.state.houseHand)}
           deal={this.handleDeal}
           hit={this.handleHit}
-        />
-        <Hand hand ={this.state.playerHand} dealer={false}/>
+          stand={this.handleStand}
+          restart={this.handleRestart}
+          status={this.state.status}
+          playerscore = {this.handleScore(this.state.playerHand)}
+          />
+          <Hand hand ={this.state.playerHand} dealer={false}/>
+        </div>
       </div>
     );
   }
 }
 
-class Hand extends React.Component {
-  // constructor(props){
-  //   super(props);
-  //   this.state = {
-  //     //default empty hand.
-  //     hand: [],
-  //     // bust: false,
-  //     sum: 0,
-  //   }
-  // }
-  
-  // populateHand(hand){
-  //   hand.map(function(card,i) {
-  //     return<Card value={card.v} face={card.f} key={i}/>
-  //   })
-  // }
-  
-  //function to hold
-  getSum(hand){
-    var sum = 0;
-    for(var i = 0; i < hand.length; i++){
-      sum += hand[i].v;
+// component to help figure out when to hit and stuff
+class Result extends React.Component {
+  render(){
+    switch(this.props.status) {
+      case "Playing...":
+         return(<div className="alert alert-info" role="alert">Hit, Stand, or Restart!</div>);
+         break;
+      case "Win":
+         return(<div className="alert alert-success" role="alert">You win! You earned my money$$ :(!</div>);    
+         break;
+      case "Lose":
+         alert("BUST!");
+         return(<div className="alert alert-danger" role="alert">You lose! Give me your money$$ :)!</div>);
+         break;
+      case "Done":
+         alert("Let's see what the House has.");
+         return<div className="alert alert-info" role="alert">House's turn</div>
+         break;
+      default:
+        return(<div className="alert alert-info" role="alert">Let's get started!</div>);
     }
-    return sum;
-  }
-
-  
+ }
+}
+class Hand extends React.Component {
 
   render() {
     return (
@@ -147,14 +181,11 @@ class Hand extends React.Component {
         { //if dealer map, else map 
           this.props.hand.map((card,i) => {
           //if its part of the houseHand, then pass a hidden true part. 
-          if (this.props.dealer && i === 1) 
+          if (this.props.dealer && i === 1 && this.props.status !== 'Done') 
             return <Card value={card.v} face={card.f} key={card.f} hidden={true}/>
           else
             return <Card value={card.v} face={card.f} key={card.f} hidden={false}/>
         })}
-        <div>
-          Hand score: {this.getSum(this.props.hand)} 
-        </div>
       </div>
     );
   }
@@ -186,14 +217,20 @@ class Interface extends React.Component {
   render() {
     return (
       <div>
-       <div>
-         
-       </div>
+      <Result status={this.props.status}/>
+        <div>
+          House Hand Score: {this.props.housescore}
+        </div>
+      <div>
        <button onClick={this.props.deal} type="button">Deal</button>
        <button onClick={this.props.hit} type="button">Hit</button>
-       <button>Stand</button>
+       <button onClick={this.props.stand} type="button">Stand</button>
        <button>Advice</button>
-       <button>Restart</button>
+       <button onClick={this.props.restart} type="button">Restart</button>
+      </div>
+        <div>
+          Player Hand Score: {this.props.playerscore}
+        </div>
       </div>
     );
   }
