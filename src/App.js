@@ -159,6 +159,12 @@ class Game extends React.Component {
     const playerHand = [];
     const houseHand = [];
   
+    //shuffle function
+    for (let i = newDeck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newDeck[i], newDeck[j]] = [newDeck[j], newDeck[i]];
+    
+    } 
 
     this.setState({
       deck: newDeck,
