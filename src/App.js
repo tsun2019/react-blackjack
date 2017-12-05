@@ -50,6 +50,7 @@ class Game extends React.Component {
       playerHand: [],
       houseHand: [],
       status: "Let's get started!",
+      tally: 0
     };
   }
 
@@ -181,6 +182,7 @@ class Game extends React.Component {
   const newDeck = [...this.state.deck];
   const houseHand = [...this.state.houseHand];
   const playerHand = [...this.state.playerHand];
+  var tally = this.state.tally;
   var status = this.state.status;
 
   while (this.handleScore(houseHand) < 17){
@@ -190,23 +192,27 @@ class Game extends React.Component {
   //find out who won and in what way (busted, better hand, push, etc.)
   if (this.handleBust(houseHand)){
     status= "House Busted";
+    tally++; 
   }
   else if(this.handleScore(houseHand) === this.handleScore(playerHand)) {
     status = "Push";
   }
   else if(this.handleScore(houseHand) > this.handleScore(playerHand)){
     status = "Lose";
+    tally--;
   }
 
   else{
     status = "Win";
+    tally++;
   }
 
 
   this.setState({
     deck: newDeck,
     houseHand: houseHand,
-    status: status
+    status: status,
+    tally: tally
   })
 }
 
@@ -233,6 +239,7 @@ class Game extends React.Component {
           restart={this.handleRestart}
           status={this.state.status}
           playerscore = {this.handleScore(this.state.playerHand)}
+          tally = {this.state.tally}
           />
           <Hand hand ={this.state.playerHand} dealer={false}/>
         </div>
@@ -328,6 +335,9 @@ class Interface extends React.Component {
       </div>
         <div>
           Player Hand Score: {this.props.playerscore}
+        </div>
+        <div>
+          Player Wins: {this.props.tally}
         </div>
       </div>
     );
