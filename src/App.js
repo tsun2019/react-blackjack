@@ -33,7 +33,7 @@ class App extends React.Component {
   render() {
     return (
     <div>
-      <Game deck={this.shuffle(this.state.deck)}/>
+      <Game deck={(this.state.deck)}/>
     </div>
    );
   }
@@ -57,12 +57,51 @@ class Game extends React.Component {
 
   handleScore = (hand) => {
     var score = 0;
+
     for(var i = 0; i < hand.length; i++){
       score += hand[i].v;
     }
 
+    if (this.state.status !== "Done" || this.state.status !== "Bust"){
+      
+    }
+    
     return score;
   }
+
+  handleHouseScore = (hand) => {
+    var score = 0;
+    
+    if (this.state.status === "Let's get started!"){
+      return score; 
+    }
+
+    for(var i = 0; i < hand.length; i++){
+      score += hand[i].v;
+      
+    }
+
+    if (this.state.status === "Done" || this.state.status === "Bust" || this.state.status === "House Busted" 
+    || this.state.status === "Push" || this.state.status === "Lose" || this.state.status === "Win" ){
+      return score; 
+    }
+    else{
+      score -= hand[1].v;
+    }
+    
+    return score;
+  }
+
+  //return true if busts, else its false
+  handleBust = (hand) => {
+    if (this.handleScore(hand) > 21){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   //this function signature is special bc it saves the "this" scope.
   handleDeal = () => {
     const newDeck = [...this.state.deck];
@@ -97,7 +136,7 @@ class Game extends React.Component {
     //five card charlie (the small chance it actually happens)
     
     if (this.handleScore(playerHand) > 21){
-      status = "Lose";
+      status = "Bust";
     }
     //houseHand does not change so don't have to setState.
     this.setState({
@@ -110,32 +149,78 @@ class Game extends React.Component {
   handleStand = () => {
     //change status so something like done to notify when player is done so house can show card and play.
     this.setState({
+      //Done indicating, done with the player move. 
       status: "Done"
     })
   }
-
+ 
   handleRestart = () => {
-    const newDeck = [this.props.deck];
+    const newDeck = [...this.props.deck];
     const playerHand = [];
     const houseHand = [];
+  
 
     this.setState({
       deck: newDeck,
       playerHand: playerHand,
-      houseHand: houseHand
+      houseHand: houseHand,
+      status: "Let's get started!"
     })
+
+  
     
  }
 
+ handleHouseTurn = () => {
+  const newDeck = [...this.state.deck];
+  const houseHand = [...this.state.houseHand];
+  const playerHand = [...this.state.playerHand];
+  var status = this.state.status;
+
+  while (this.handleScore(houseHand) < 17){
+    houseHand.push(newDeck.pop());
+  }
+
+  //find out who won and in what way (busted, better hand, push, etc.)
+  if (this.handleBust(houseHand)){
+    status= "House Busted";
+  }
+  else if(this.handleScore(houseHand) === this.handleScore(playerHand)) {
+    status = "Push";
+  }
+  else if(this.handleScore(houseHand) > this.handleScore(playerHand)){
+    status = "Lose";
+  }
+
+  else{
+    status = "Win";
+  }
+
+
+  this.setState({
+    deck: newDeck,
+    houseHand: houseHand,
+    status: status
+  })
+}
 
   render(){
+  
+    if (this.state.status === "Done")
+      this.handleHouseTurn();
+    
     return (
       //render a status here
       <div>
         <div>
-          <Hand hand={this.state.houseHand} dealer={true} status={this.state.status}/>
+          {(this.state.status === "Done" || this.state.status === "Bust" || this.state.status === "House Busted" 
+          || this.state.status === "Push" || this.state.status === "Lose" || this.state.status === "Win" )
+           ?  <Hand hand={this.state.houseHand} dealer={false} status={this.state.status}/>
+           :  <Hand hand={this.state.houseHand} dealer={true} status={this.state.status}/>
+          }
+         {/* <Hand hand={this.state.houseHand} dealer={true} status={this.state.status}/> */}
           <Interface
-          housescore = {this.handleScore(this.state.houseHand)}
+          housescore = {this.handleHouseScore(this.state.houseHand)}
           deal={this.handleDeal}
           hit={this.handleHit}
           stand={this.handleStand}
@@ -156,20 +241,27 @@ class Result extends React.Component {
     switch(this.props.status) {
       case "Playing...":
          return(<div className="alert alert-info" role="alert">Hit, Stand, or Restart!</div>);
-         break;
+         
       case "Win":
          return(<div className="alert alert-success" role="alert">You win! You earned my money$$ :(!</div>);    
-         break;
+         
+      case "House Busted":
+         return(<div className="alert alert-success" role="alert">House BUSTED! You win! You earned my money$$ :(!</div>);
+         
+      case "Bust":
+         alert("You busted! Let's see what the house had...")
+         return(<div className="alert alert-danger" role="alert">You BUSTED! You lose! Give me your money$$ :)!</div>);
+      case "Push":
+         return(<div className="alert alert-info" role ="alert">The hands are equal. Push! Hold on to your money for now... ;)!</div>);
       case "Lose":
-         alert("BUST!");
-         return(<div className="alert alert-danger" role="alert">You lose! Give me your money$$ :)!</div>);
-         break;
+         return(<div className="alert alert-danger" role="alert">House had a better hand.You lose! Give me your money$$ :)!</div>);
       case "Done":
          alert("Let's see what the House has.");
          return<div className="alert alert-info" role="alert">House's turn</div>
-         break;
+         
       default:
-        return(<div className="alert alert-info" role="alert">Let's get started!</div>);
+        return(<div className="alert alert-info" role="alert">{this.props.status}</div>);
+        
     }
  }
 }
@@ -181,7 +273,7 @@ class Hand extends React.Component {
         { //if dealer map, else map 
           this.props.hand.map((card,i) => {
           //if its part of the houseHand, then pass a hidden true part. 
-          if (this.props.dealer && i === 1 && this.props.status !== 'Done') 
+          if (this.props.dealer && i === 1 && this.props.status !== 'Done' && this.props.status !== 'House went.' && this.props.status !== "Win" && this.props.status !== "Lose" && this.props.status !== "Push" ) 
             return <Card value={card.v} face={card.f} key={card.f} hidden={true}/>
           else
             return <Card value={card.v} face={card.f} key={card.f} hidden={false}/>
