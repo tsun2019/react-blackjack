@@ -171,7 +171,40 @@ class Game extends React.Component {
       status: "Done"
     })
   }
+
+  // handleSplit = () => {
+    
+  // }
  
+
+  //double down
+  handleDoubleDown = () => {
+    const playerHand = [...this.state.playerHand];
+    var status = this.state.status;
+    var bet = this.state.bet;
+    
+    // multiply bet by two since doubling down
+    bet *= 2;
+
+    //need find way to disable unless on first 2 cards dealt.
+
+    //double down in AC, ony allows one hit and you must stand then.
+    //also changes status to bust if it busts..
+    this.handleHit(playerHand);
+
+    if (this.handleScore(playerHand) <= 21){
+      this.handleStand();
+    }
+
+    this.setState({
+      playerHand: playerHand,
+      status: status,
+      bet: bet
+    });
+
+  }
+
+
   handleRestart = () => {
     const newDeck = [...this.props.deck];
     const playerHand = [];
@@ -276,6 +309,8 @@ class Game extends React.Component {
           deal={this.handleDeal}
           hit={this.handleHit}
           stand={this.handleStand}
+          bet={this.state.bet}
+          doubleDown={this.handleDoubleDown}
           restart={this.handleRestart}
           status={this.state.status}
           playerscore = {this.handleScore(this.state.playerHand)}
@@ -370,25 +405,33 @@ class Interface extends React.Component {
   render() {
     return (
       <div>
-      <Result status={this.props.status}/>
-        <div>
+        <h3>
           House Hand Score: {this.props.housescore}
-        </div>
+        </h3>
       <div>
        <button onClick={this.props.deal} type="button">Deal</button>
        <button onClick={this.props.hit} type="button">Hit</button>
        <button onClick={this.props.stand} type="button">Stand</button>
+       <button onClick={this.props.doubleDown} type="button">Double Down</button>
+       <button type="button">Split</button>
        <button>Advice</button>
        <button onClick={this.props.restart} type="button">Restart</button>
+       
       </div>
-        <div>
+      <div>
+        <Result status={this.props.status}/>
+      </div>
+        <h3>
           Player Hand Score: {this.props.playerscore}
-        </div>
+        </h3>
         <div>
           Player Wins: {this.props.tally}
         </div>
         <div>
           Player Bank: ${this.props.playerBank}
+        </div>
+        <div>
+          Player Bet Locked In: ${this.props.bet}
         </div>
        
       </div>
