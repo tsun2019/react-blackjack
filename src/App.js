@@ -50,21 +50,28 @@ class Game extends React.Component {
       playerHand: [],
       houseHand: [],
       status: "Let's get started!",
-      tally: 0
+      tally: 0,
+      playerBank: 100,
     };
   }
-
+  
   //create functions to handle certain events (dealing,hit,stand,restart,advice)
 
   handleScore = (hand) => {
     var score = 0;
+    var hasAce = false;
 
     for(var i = 0; i < hand.length; i++){
       score += hand[i].v;
+      if (hand[i].f === "c1" || hand[i].f === "d1" || hand[i].f === "h1" || hand[i].f === "s1"){
+        hasAce = true;
+      }
     }
-
-    if (this.state.status !== "Done" || this.state.status !== "Bust"){
-      
+    
+    //need logic to decide if ace is 1 or 11
+    if (score > 21 && hasAce){
+      score -= 11;
+      score += 1;
     }
     
     return score;
@@ -72,6 +79,7 @@ class Game extends React.Component {
 
   handleHouseScore = (hand) => {
     var score = 0;
+    var hasAce = false;
     
     if (this.state.status === "Let's get started!"){
       return score; 
@@ -79,6 +87,9 @@ class Game extends React.Component {
 
     for(var i = 0; i < hand.length; i++){
       score += hand[i].v;
+      if (hand[i].f === "c1" || hand[i].f === "d1" || hand[i].f === "h1" || hand[i].f === "s1"){
+        hasAce = true;
+      }
       
     }
 
@@ -88,6 +99,12 @@ class Game extends React.Component {
     }
     else{
       score -= hand[1].v;
+    }
+
+    //need logic to decide if ace is 1 or 11
+    if (score > 21 && hasAce){
+      score -= 11;
+      score += 1;
     }
     
     return score;
@@ -184,6 +201,7 @@ class Game extends React.Component {
   const playerHand = [...this.state.playerHand];
   var tally = this.state.tally;
   var status = this.state.status;
+  var bank = parseInt(this.state.playerBank);
 
   while (this.handleScore(houseHand) < 17){
     houseHand.push(newDeck.pop());
@@ -192,19 +210,29 @@ class Game extends React.Component {
   //find out who won and in what way (busted, better hand, push, etc.)
   if (this.handleBust(houseHand)){
     status= "House Busted";
-    tally++; 
+    tally++;
+    bank += parseInt(this.state.bet);
+
   }
   else if(this.handleScore(houseHand) === this.handleScore(playerHand)) {
     status = "Push";
+  
   }
   else if(this.handleScore(houseHand) > this.handleScore(playerHand)){
     status = "Lose";
     tally--;
+    bank -= parseInt(this.state.bet);
+  
   }
-
+  else if(this.state.status === "Bust"){
+    status = "Bust"
+    tally--;
+    bank -= parseInt(this.state.bet);
+  }
   else{
     status = "Win";
     tally++;
+    bank += parseInt(this.state.bet);
   }
 
 
@@ -212,9 +240,21 @@ class Game extends React.Component {
     deck: newDeck,
     houseHand: houseHand,
     status: status,
-    tally: tally
+    tally: tally,
+    playerBank: bank
   })
 }
+
+ handleBet = (event) => {
+   this.setState({
+     bet: event.target.value
+   });
+ }
+
+ handleSubmit = (event) => {
+   alert("$" + this.state.bet + " bet is locked in.");
+   event.preventDefault();
+ }
 
   render(){
   
@@ -240,7 +280,15 @@ class Game extends React.Component {
           status={this.state.status}
           playerscore = {this.handleScore(this.state.playerHand)}
           tally = {this.state.tally}
+          playerBank = {this.state.playerBank}
           />
+          <form onSubmit={this.handleSubmit}>
+          <label>
+             Player Bet: 
+             <input type="text" value={this.state.bet} onChange= {this.handleBet}/>
+             <input type="submit"/>
+          </label>
+          </form>
           <Hand hand ={this.state.playerHand} dealer={false}/>
         </div>
       </div>
@@ -339,6 +387,10 @@ class Interface extends React.Component {
         <div>
           Player Wins: {this.props.tally}
         </div>
+        <div>
+          Player Bank: ${this.props.playerBank}
+        </div>
+       
       </div>
     );
   }
