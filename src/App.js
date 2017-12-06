@@ -60,6 +60,7 @@ class Game extends React.Component {
   handleScore = (hand) => {
     var score = 0;
     var hasAce = false;
+    var status = this.state.status;
 
     for(var i = 0; i < hand.length; i++){
       score += hand[i].v;
@@ -73,6 +74,8 @@ class Game extends React.Component {
       score -= 11;
       score += 1;
     }
+
+ 
     
     return score;
   }
@@ -125,6 +128,7 @@ class Game extends React.Component {
     const newDeck = [...this.state.deck];
     const newPlayerHand = [...this.state.playerHand];
     const newHouseHand = [...this.state.houseHand];
+    var newStatus = "Playing..."
 
     //deal
     newPlayerHand.push(newDeck.pop());
@@ -133,12 +137,16 @@ class Game extends React.Component {
     //need to push a card and hide it in dealerHand bc 2nd card is hidden. 
     newHouseHand.push(newDeck.pop());
 
+    //if has 21 on first 2 cards... it is BLACKJACK, pays 3:2 (1.5 * bet)
+    if (this.handleScore(newPlayerHand) === 21 && newPlayerHand.length == 2){
+      newStatus = "Blackjack"
+    }
     //make updates
     this.setState({
       playerHand : newPlayerHand,
       houseHand: newHouseHand,
       deck: newDeck,
-      status: "Playing...",
+      status: newStatus,
     });
   }
 
@@ -337,7 +345,8 @@ class Result extends React.Component {
     switch(this.props.status) {
       case "Playing...":
          return(<div className="alert alert-info" role="alert">Hit, Stand, or Restart!</div>);
-         
+      case "Blackjack":
+         return(<div className="alert alert-success" role="alert">BLACKJACK! You win 3:2 your bet (1.5 times your bet)!</div>);
       case "Win":
          return(<div className="alert alert-success" role="alert">You win! You earned my money$$ :(!</div>);    
          
