@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      deck: [...this.shuffle([
+      deck: [...this.shuffle(this.shuffle([
         {v:11,f:"c1"},{v:2,f:"c2"},{v:3,f:"c3"},{v:4,f:"c4"},{v:5,f:"c5"},{v:6,f:"c6"},
         {v:7,f:"c7"},{v:8,f:"c8"},{v:9,f:"c9"},{v:10,f:"c10"},{v:10,f:"c11"},{v:10,f:"c12"},{v:10,f:"c13"},
         {v:11,f:"h1"},{v:2,f:"h2"},{v:3,f:"h3"},{v:4,f:"h4"},{v:5,f:"h5"},{v:6,f:"h6"},
@@ -16,8 +16,64 @@ class App extends React.Component {
         {v:11,f:"s1"},{v:2,f:"s2"},{v:3,f:"s3"},{v:4,f:"s4"},{v:5,f:"s5"},{v:6,f:"s6"},
         {v:7,f:"s7"},{v:8,f:"s8"},{v:9,f:"s9"},{v:10,f:"s10"},{v:10,f:"s11"},{v:10,f:"s12"},{v:10,f:"s13"},
         {v:11,f:"d1"},{v:2,f:"d2"},{v:3,f:"d3"},{v:4,f:"d4"},{v:5,f:"d5"},{v:6,f:"d6"},
-        {v:7,f:"d7"},{v:8,f:"d8"},{v:9,f:"d9"},{v:10,f:"d10"},{v:10,f:"d11"},{v:10,f:"d12"},{v:10,f:"d13"}
-        ])],
+        {v:7,f:"d7"},{v:8,f:"d8"},{v:9,f:"d9"},{v:10,f:"d10"},{v:10,f:"d11"},{v:10,f:"d12"},{v:10,f:"d13"},
+        {v:11,f:"c1"},{v:2,f:"c2"},{v:3,f:"c3"},{v:4,f:"c4"},{v:5,f:"c5"},{v:6,f:"c6"},
+        {v:7,f:"c7"},{v:8,f:"c8"},{v:9,f:"c9"},{v:10,f:"c10"},{v:10,f:"c11"},{v:10,f:"c12"},{v:10,f:"c13"},
+        {v:11,f:"h1"},{v:2,f:"h2"},{v:3,f:"h3"},{v:4,f:"h4"},{v:5,f:"h5"},{v:6,f:"h6"},
+        {v:7,f:"h7"},{v:8,f:"h8"},{v:9,f:"h9"},{v:10,f:"h10"},{v:10,f:"h11"},{v:10,f:"h12"},{v:10,f:"h13"},
+        {v:11,f:"s1"},{v:2,f:"s2"},{v:3,f:"s3"},{v:4,f:"s4"},{v:5,f:"s5"},{v:6,f:"s6"},
+        {v:7,f:"s7"},{v:8,f:"s8"},{v:9,f:"s9"},{v:10,f:"s10"},{v:10,f:"s11"},{v:10,f:"s12"},{v:10,f:"s13"},
+        {v:11,f:"d1"},{v:2,f:"d2"},{v:3,f:"d3"},{v:4,f:"d4"},{v:5,f:"d5"},{v:6,f:"d6"},
+        {v:7,f:"d7"},{v:8,f:"d8"},{v:9,f:"d9"},{v:10,f:"d10"},{v:10,f:"d11"},{v:10,f:"d12"},{v:10,f:"d13"},
+        {v:11,f:"c1"},{v:2,f:"c2"},{v:3,f:"c3"},{v:4,f:"c4"},{v:5,f:"c5"},{v:6,f:"c6"},
+        {v:7,f:"c7"},{v:8,f:"c8"},{v:9,f:"c9"},{v:10,f:"c10"},{v:10,f:"c11"},{v:10,f:"c12"},{v:10,f:"c13"},
+        {v:11,f:"h1"},{v:2,f:"h2"},{v:3,f:"h3"},{v:4,f:"h4"},{v:5,f:"h5"},{v:6,f:"h6"},
+        {v:7,f:"h7"},{v:8,f:"h8"},{v:9,f:"h9"},{v:10,f:"h10"},{v:10,f:"h11"},{v:10,f:"h12"},{v:10,f:"h13"},
+        {v:11,f:"s1"},{v:2,f:"s2"},{v:3,f:"s3"},{v:4,f:"s4"},{v:5,f:"s5"},{v:6,f:"s6"},
+        {v:7,f:"s7"},{v:8,f:"s8"},{v:9,f:"s9"},{v:10,f:"s10"},{v:10,f:"s11"},{v:10,f:"s12"},{v:10,f:"s13"},
+        {v:11,f:"d1"},{v:2,f:"d2"},{v:3,f:"d3"},{v:4,f:"d4"},{v:5,f:"d5"},{v:6,f:"d6"},
+        {v:7,f:"d7"},{v:8,f:"d8"},{v:9,f:"d9"},{v:10,f:"d10"},{v:10,f:"d11"},{v:10,f:"d12"},{v:10,f:"d13"},
+        {v:11,f:"c1"},{v:2,f:"c2"},{v:3,f:"c3"},{v:4,f:"c4"},{v:5,f:"c5"},{v:6,f:"c6"},
+        {v:7,f:"c7"},{v:8,f:"c8"},{v:9,f:"c9"},{v:10,f:"c10"},{v:10,f:"c11"},{v:10,f:"c12"},{v:10,f:"c13"},
+        {v:11,f:"h1"},{v:2,f:"h2"},{v:3,f:"h3"},{v:4,f:"h4"},{v:5,f:"h5"},{v:6,f:"h6"},
+        {v:7,f:"h7"},{v:8,f:"h8"},{v:9,f:"h9"},{v:10,f:"h10"},{v:10,f:"h11"},{v:10,f:"h12"},{v:10,f:"h13"},
+        {v:11,f:"s1"},{v:2,f:"s2"},{v:3,f:"s3"},{v:4,f:"s4"},{v:5,f:"s5"},{v:6,f:"s6"},
+        {v:7,f:"s7"},{v:8,f:"s8"},{v:9,f:"s9"},{v:10,f:"s10"},{v:10,f:"s11"},{v:10,f:"s12"},{v:10,f:"s13"},
+        {v:11,f:"d1"},{v:2,f:"d2"},{v:3,f:"d3"},{v:4,f:"d4"},{v:5,f:"d5"},{v:6,f:"d6"},
+        {v:7,f:"d7"},{v:8,f:"d8"},{v:9,f:"d9"},{v:10,f:"d10"},{v:10,f:"d11"},{v:10,f:"d12"},{v:10,f:"d13"},
+        {v:11,f:"c1"},{v:2,f:"c2"},{v:3,f:"c3"},{v:4,f:"c4"},{v:5,f:"c5"},{v:6,f:"c6"},
+        {v:7,f:"c7"},{v:8,f:"c8"},{v:9,f:"c9"},{v:10,f:"c10"},{v:10,f:"c11"},{v:10,f:"c12"},{v:10,f:"c13"},
+        {v:11,f:"h1"},{v:2,f:"h2"},{v:3,f:"h3"},{v:4,f:"h4"},{v:5,f:"h5"},{v:6,f:"h6"},
+        {v:7,f:"h7"},{v:8,f:"h8"},{v:9,f:"h9"},{v:10,f:"h10"},{v:10,f:"h11"},{v:10,f:"h12"},{v:10,f:"h13"},
+        {v:11,f:"s1"},{v:2,f:"s2"},{v:3,f:"s3"},{v:4,f:"s4"},{v:5,f:"s5"},{v:6,f:"s6"},
+        {v:7,f:"s7"},{v:8,f:"s8"},{v:9,f:"s9"},{v:10,f:"s10"},{v:10,f:"s11"},{v:10,f:"s12"},{v:10,f:"s13"},
+        {v:11,f:"d1"},{v:2,f:"d2"},{v:3,f:"d3"},{v:4,f:"d4"},{v:5,f:"d5"},{v:6,f:"d6"},
+        {v:7,f:"d7"},{v:8,f:"d8"},{v:9,f:"d9"},{v:10,f:"d10"},{v:10,f:"d11"},{v:10,f:"d12"},{v:10,f:"d13"},
+        {v:11,f:"c1"},{v:2,f:"c2"},{v:3,f:"c3"},{v:4,f:"c4"},{v:5,f:"c5"},{v:6,f:"c6"},
+        {v:7,f:"c7"},{v:8,f:"c8"},{v:9,f:"c9"},{v:10,f:"c10"},{v:10,f:"c11"},{v:10,f:"c12"},{v:10,f:"c13"},
+        {v:11,f:"h1"},{v:2,f:"h2"},{v:3,f:"h3"},{v:4,f:"h4"},{v:5,f:"h5"},{v:6,f:"h6"},
+        {v:7,f:"h7"},{v:8,f:"h8"},{v:9,f:"h9"},{v:10,f:"h10"},{v:10,f:"h11"},{v:10,f:"h12"},{v:10,f:"h13"},
+        {v:11,f:"s1"},{v:2,f:"s2"},{v:3,f:"s3"},{v:4,f:"s4"},{v:5,f:"s5"},{v:6,f:"s6"},
+        {v:7,f:"s7"},{v:8,f:"s8"},{v:9,f:"s9"},{v:10,f:"s10"},{v:10,f:"s11"},{v:10,f:"s12"},{v:10,f:"s13"},
+        {v:11,f:"d1"},{v:2,f:"d2"},{v:3,f:"d3"},{v:4,f:"d4"},{v:5,f:"d5"},{v:6,f:"d6"},
+        {v:7,f:"d7"},{v:8,f:"d8"},{v:9,f:"d9"},{v:10,f:"d10"},{v:10,f:"d11"},{v:10,f:"d12"},{v:10,f:"d13"},
+        {v:11,f:"c1"},{v:2,f:"c2"},{v:3,f:"c3"},{v:4,f:"c4"},{v:5,f:"c5"},{v:6,f:"c6"},
+        {v:7,f:"c7"},{v:8,f:"c8"},{v:9,f:"c9"},{v:10,f:"c10"},{v:10,f:"c11"},{v:10,f:"c12"},{v:10,f:"c13"},
+        {v:11,f:"h1"},{v:2,f:"h2"},{v:3,f:"h3"},{v:4,f:"h4"},{v:5,f:"h5"},{v:6,f:"h6"},
+        {v:7,f:"h7"},{v:8,f:"h8"},{v:9,f:"h9"},{v:10,f:"h10"},{v:10,f:"h11"},{v:10,f:"h12"},{v:10,f:"h13"},
+        {v:11,f:"s1"},{v:2,f:"s2"},{v:3,f:"s3"},{v:4,f:"s4"},{v:5,f:"s5"},{v:6,f:"s6"},
+        {v:7,f:"s7"},{v:8,f:"s8"},{v:9,f:"s9"},{v:10,f:"s10"},{v:10,f:"s11"},{v:10,f:"s12"},{v:10,f:"s13"},
+        {v:11,f:"d1"},{v:2,f:"d2"},{v:3,f:"d3"},{v:4,f:"d4"},{v:5,f:"d5"},{v:6,f:"d6"},
+        {v:7,f:"d7"},{v:8,f:"d8"},{v:9,f:"d9"},{v:10,f:"d10"},{v:10,f:"d11"},{v:10,f:"d12"},{v:10,f:"d13"},
+        {v:11,f:"c1"},{v:2,f:"c2"},{v:3,f:"c3"},{v:4,f:"c4"},{v:5,f:"c5"},{v:6,f:"c6"},
+        {v:7,f:"c7"},{v:8,f:"c8"},{v:9,f:"c9"},{v:10,f:"c10"},{v:10,f:"c11"},{v:10,f:"c12"},{v:10,f:"c13"},
+        {v:11,f:"h1"},{v:2,f:"h2"},{v:3,f:"h3"},{v:4,f:"h4"},{v:5,f:"h5"},{v:6,f:"h6"},
+        {v:7,f:"h7"},{v:8,f:"h8"},{v:9,f:"h9"},{v:10,f:"h10"},{v:10,f:"h11"},{v:10,f:"h12"},{v:10,f:"h13"},
+        {v:11,f:"s1"},{v:2,f:"s2"},{v:3,f:"s3"},{v:4,f:"s4"},{v:5,f:"s5"},{v:6,f:"s6"},
+        {v:7,f:"s7"},{v:8,f:"s8"},{v:9,f:"s9"},{v:10,f:"s10"},{v:10,f:"s11"},{v:10,f:"s12"},{v:10,f:"s13"},
+        {v:11,f:"d1"},{v:2,f:"d2"},{v:3,f:"d3"},{v:4,f:"d4"},{v:5,f:"d5"},{v:6,f:"d6"},
+        {v:7,f:"d7"},{v:8,f:"d8"},{v:9,f:"d9"},{v:10,f:"d10"},{v:10,f:"d11"},{v:10,f:"d12"},{v:10,f:"d13"},
+        ]))],
     }; 
   }
 
@@ -52,6 +108,7 @@ class Game extends React.Component {
       status: "Let's get started!",
       tally: 0,
       playerBank: 100,
+      lockedIn: false
     };
   }
   
@@ -60,7 +117,6 @@ class Game extends React.Component {
   handleScore = (hand) => {
     var score = 0;
     var hasAce = false;
-    var status = this.state.status;
 
     for(var i = 0; i < hand.length; i++){
       score += hand[i].v;
@@ -74,8 +130,6 @@ class Game extends React.Component {
       score -= 11;
       score += 1;
     }
-
- 
     
     return score;
   }
@@ -96,6 +150,12 @@ class Game extends React.Component {
       
     }
 
+    //need logic to decide if ace is 1 or 11
+    if (score > 21 && hasAce){
+      score -= 11;
+      score += 1;
+    }
+
     if (this.state.status === "Done" || this.state.status === "Bust" || this.state.status === "House Busted" 
     || this.state.status === "Push" || this.state.status === "Lose" || this.state.status === "Win" ){
       return score; 
@@ -104,11 +164,7 @@ class Game extends React.Component {
       score -= hand[1].v;
     }
 
-    //need logic to decide if ace is 1 or 11
-    if (score > 21 && hasAce){
-      score -= 11;
-      score += 1;
-    }
+    
     
     return score;
   }
@@ -128,6 +184,9 @@ class Game extends React.Component {
     const newDeck = [...this.state.deck];
     const newPlayerHand = [...this.state.playerHand];
     const newHouseHand = [...this.state.houseHand];
+    var bet = this.state.bet;
+    var tally = this.state.tally;
+    var playerBank = this.state.playerBank;
     var newStatus = "Playing..."
 
     //deal
@@ -138,8 +197,12 @@ class Game extends React.Component {
     newHouseHand.push(newDeck.pop());
 
     //if has 21 on first 2 cards... it is BLACKJACK, pays 3:2 (1.5 * bet)
-    if (this.handleScore(newPlayerHand) === 21 && newPlayerHand.length == 2){
+    if (this.handleScore(newPlayerHand) === 21 && newPlayerHand.length === 2){
       newStatus = "Blackjack"
+      bet *= 1.5;
+      tally++;
+      playerBank += bet;
+
     }
     //make updates
     this.setState({
@@ -147,6 +210,10 @@ class Game extends React.Component {
       houseHand: newHouseHand,
       deck: newDeck,
       status: newStatus,
+      lockedIn: false,
+      bet: bet,
+      tally: tally,
+      playerBank: playerBank,
     });
   }
 
@@ -155,6 +222,8 @@ class Game extends React.Component {
     const newDeck = [...this.state.deck];
     const playerHand = [...this.state.playerHand];
     var status = this.state.status;
+    var tally = this.state.tally;
+    var playerBank = this.state.playerBank;
     
     //deal card
     playerHand.push(newDeck.pop());
@@ -163,12 +232,17 @@ class Game extends React.Component {
     
     if (this.handleScore(playerHand) > 21){
       status = "Bust";
+      tally--;
+      playerBank -= this.state.bet;
+      
     }
     //houseHand does not change so don't have to setState.
     this.setState({
       playerHand: playerHand,
       deck: newDeck,
-      status: status
+      status: status,
+      tally: tally,
+      playerBank: playerBank
     })
   }
   
@@ -225,11 +299,13 @@ class Game extends React.Component {
     
     } 
 
+    //set state to initial settings to play a new game
     this.setState({
       deck: newDeck,
       playerHand: playerHand,
       houseHand: houseHand,
-      status: "Let's get started!"
+      status: "Let's get started!",
+      lockedIn: false
     })
 
   
@@ -242,7 +318,7 @@ class Game extends React.Component {
   const playerHand = [...this.state.playerHand];
   var tally = this.state.tally;
   var status = this.state.status;
-  var bank = parseInt(this.state.playerBank);
+  var bank = parseInt(this.state.playerBank,10);
 
   while (this.handleScore(houseHand) < 17){
     houseHand.push(newDeck.pop());
@@ -252,7 +328,8 @@ class Game extends React.Component {
   if (this.handleBust(houseHand)){
     status= "House Busted";
     tally++;
-    bank += parseInt(this.state.bet);
+    //10 added for radix
+    bank += parseInt(this.state.bet,10);
 
   }
   else if(this.handleScore(houseHand) === this.handleScore(playerHand)) {
@@ -262,18 +339,18 @@ class Game extends React.Component {
   else if(this.handleScore(houseHand) > this.handleScore(playerHand)){
     status = "Lose";
     tally--;
-    bank -= parseInt(this.state.bet);
+    bank -= parseInt(this.state.bet,10);
   
   }
   else if(this.state.status === "Bust"){
     status = "Bust"
     tally--;
-    bank -= parseInt(this.state.bet);
+    bank -= parseInt(this.state.bet,10);
   }
   else{
     status = "Win";
     tally++;
-    bank += parseInt(this.state.bet);
+    bank += parseInt(this.state.bet,10);
   }
 
 
@@ -295,6 +372,10 @@ class Game extends React.Component {
  handleSubmit = (event) => {
    alert("$" + this.state.bet + " bet is locked in.");
    event.preventDefault();
+
+   this.setState({
+    lockedIn: true
+  });
  }
 
   render(){
@@ -318,7 +399,8 @@ class Game extends React.Component {
           hit={this.handleHit}
           stand={this.handleStand}
           bet={this.state.bet}
-          doubleDown={this.handleDoubleDown}
+          lockedin={this.state.lockedIn}
+          doubledown={this.handleDoubleDown}
           restart={this.handleRestart}
           status={this.state.status}
           playerscore = {this.handleScore(this.state.playerHand)}
@@ -349,10 +431,8 @@ class Result extends React.Component {
          return(<div className="alert alert-success" role="alert">BLACKJACK! You win 3:2 your bet (1.5 times your bet)!</div>);
       case "Win":
          return(<div className="alert alert-success" role="alert">You win! You earned my money$$ :(!</div>);    
-         
       case "House Busted":
          return(<div className="alert alert-success" role="alert">House BUSTED! You win! You earned my money$$ :(!</div>);
-         
       case "Bust":
          alert("You busted! Let's see what the house had...")
          return(<div className="alert alert-danger" role="alert">You BUSTED! You lose! Give me your money$$ :)!</div>);
@@ -362,8 +442,7 @@ class Result extends React.Component {
          return(<div className="alert alert-danger" role="alert">House had a better hand.You lose! Give me your money$$ :)!</div>);
       case "Done":
          alert("Let's see what the House has.");
-         return<div className="alert alert-info" role="alert">House's turn</div>
-         
+         return<div className="alert alert-info" role="alert">House's turn</div>  
       default:
         return(<div className="alert alert-info" role="alert">{this.props.status}</div>);
         
@@ -418,7 +497,7 @@ class Interface extends React.Component {
           House Hand Score: {this.props.housescore}
         </h3>
       <div>
-       <button onClick={this.props.deal} type="button">Deal</button>
+       <button disabled={!this.props.lockedin} onClick={this.props.deal} type="button">Deal</button>
        <button onClick={this.props.hit} type="button">Hit</button>
        <button onClick={this.props.stand} type="button">Stand</button>
        <button onClick={this.props.doubleDown} type="button">Double Down</button>
