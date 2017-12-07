@@ -23,10 +23,48 @@
     <title>React Blackjack</title>
   </head>
   <body>
+    <div class="container">
+      <div class="row">
+        <!-- col extra small 6 cols-->
+        <div class="col-xs-6">
+          What's up. This should be responsive
+        </div>
+        <div class="col-xs-6">
+            Sup This should be responsive
+        </div>
+      </div>
+    </div>
     <h1>BLACKJACK</h1>
-    <p>Press "Deal" to start. Remember you can always click advice if you need help 
-      on whether or not you should hit.</p>
+    <div>
+      <h3><u>Instructions</u></h3>
+      <div class="instructions">
+          <ol>
+              <li>
+                  Press "Deal" to start. Remember you can always click advice if you need help 
+                  on whether or not you should hit.
+              </li>
+              <li>
+                  Make sure to submit a bet so you can start the game by dealing...
+              </li>
+              <li>
+                  Press "Restart" to start a new round when the round is over.
+              </li>
+          </ol>
+          
+      </div>
+    </div>
     
+    <div class="rules">
+      <h4><u>Atlantic City(AC) Blackjack Rules with 8 decks</u></h4>
+      <ul>
+        <li>Dealer must hit if the hand score is 16 or under. 
+          Dealer will stand on anything 17 or above, including soft 17s (Ace and 6)</li>
+        <li>Natural blackjack will be paid 6-to-5</li>
+        <li>Player can only double down on a combined hand of 9, 10, or 11</li>
+        <li>Player may only split once</li>
+        <li>Player may double after splitting</li>
+      </ul>  
+    </div>
     <div id="root"></div>
     <!--
       This HTML file is a template.

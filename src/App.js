@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactModal from 'react-modal';
 // import logo from './logo.svg';
 import './App.css';
 
@@ -108,9 +109,26 @@ class Game extends React.Component {
       status: "Let's get started!",
       tally: 0,
       playerBank: 100,
-      lockedIn: false
+      lockedIn: false,
+      modalIsOpen: false
     };
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
+
+  //handle modals
+  openModal() {
+    this.setState({
+      modalIsOpen: true
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      modalIsOpen: false
+    });
+  }
+ 
   
   //create functions to handle certain events (dealing,hit,stand,restart,advice)
 
@@ -196,10 +214,11 @@ class Game extends React.Component {
     //need to push a card and hide it in dealerHand bc 2nd card is hidden. 
     newHouseHand.push(newDeck.pop());
 
-    //if has 21 on first 2 cards... it is BLACKJACK, pays 3:2 (1.5 * bet)
+    //if has 21 on first 2 cards... it is BLACKJACK, and
+    // since it's AC rules with 8 decks, player wins 6:5 (1.2 * bet)
     if (this.handleScore(newPlayerHand) === 21 && newPlayerHand.length === 2){
       newStatus = "Blackjack"
-      bet *= 1.5;
+      bet *= 1.2;
       tally++;
       playerBank += bet;
 
@@ -210,7 +229,6 @@ class Game extends React.Component {
       houseHand: newHouseHand,
       deck: newDeck,
       status: newStatus,
-      lockedIn: false,
       bet: bet,
       tally: tally,
       playerBank: playerBank,
@@ -373,6 +391,8 @@ class Game extends React.Component {
    alert("$" + this.state.bet + " bet is locked in.");
    event.preventDefault();
 
+   this.closeModal();
+
    this.setState({
     lockedIn: true
   });
@@ -407,19 +427,45 @@ class Game extends React.Component {
           tally = {this.state.tally}
           playerBank = {this.state.playerBank}
           />
-          <form onSubmit={this.handleSubmit}>
-          <label>
-             Player Bet: 
-             <input type="text" value={this.state.bet} onChange= {this.handleBet}/>
-             <input type="submit"/>
-          </label>
-          </form>
+          <div>
+            <button disabled={this.state.lockedIn} onClick={this.openModal}>Make Bet</button>
+            <ReactModal 
+              isOpen={this.state.modalIsOpen}
+              contentLabel="Example Modal"
+              style={
+                {
+                  content: {
+                    position: 'absolute',
+                    width: "30%",
+                    height: "30%",
+                    left: 600,
+                    top: 150
+                  }
+                }
+              }
+            >
+              <h2>Insert a Bet!</h2>
+              <div>
+                <form>
+                  <label>
+                    Player Bet: 
+                    <input type="text" value={this.state.bet} onChange= {this.handleBet}/>
+                    <button onClick={this.handleSubmit}>Bet</button>
+                 </label>
+               </form> 
+               
+              </div>
+              
+            </ReactModal>
+          </div>
+          
           <Hand hand ={this.state.playerHand} dealer={false}/>
         </div>
       </div>
     );
   }
 }
+
 
 // component to help figure out when to hit and stuff
 class Result extends React.Component {
@@ -428,7 +474,7 @@ class Result extends React.Component {
       case "Playing...":
          return(<div className="alert alert-info" role="alert">Hit, Stand, or Restart!</div>);
       case "Blackjack":
-         return(<div className="alert alert-success" role="alert">BLACKJACK! You win 3:2 your bet (1.5 times your bet)!</div>);
+         return(<div className="alert alert-success" role="alert">BLACKJACK! You win 6:5 your bet (1.2 times your bet)!</div>);
       case "Win":
          return(<div className="alert alert-success" role="alert">You win! You earned my money$$ :(!</div>);    
       case "House Busted":
@@ -498,10 +544,10 @@ class Interface extends React.Component {
         </h3>
       <div>
        <button disabled={!this.props.lockedin} onClick={this.props.deal} type="button">Deal</button>
-       <button onClick={this.props.hit} type="button">Hit</button>
-       <button onClick={this.props.stand} type="button">Stand</button>
-       <button onClick={this.props.doubleDown} type="button">Double Down</button>
-       <button type="button">Split</button>
+       <button disabled={!this.props.lockedin} onClick={this.props.hit} type="button">Hit</button>
+       <button disabled={!this.props.lockedin} onClick={this.props.stand} type="button">Stand</button>
+       <button disabled={true} onClick={this.props.doubleDown} type="button">Double Down</button>
+       <button disabled={true} type="button">Split</button>
        <button>Advice</button>
        <button onClick={this.props.restart} type="button">Restart</button>
        
