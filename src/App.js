@@ -470,29 +470,48 @@ class Game extends React.Component {
 // component to help figure out when to hit and stuff
 class Result extends React.Component {
   render(){
+    var html;
+    
     switch(this.props.status) {
       case "Playing...":
-         return(<div className="alert alert-info" role="alert">Hit, Stand, or Restart!</div>);
+         html = (<div className="alert alert-info" role="alert">Hit, Stand, or Restart!</div>);
+         break;
       case "Blackjack":
-         return(<div className="alert alert-success" role="alert">BLACKJACK! You win 6:5 your bet (1.2 times your bet)!</div>);
+         html = (<div className="alert alert-success" role="alert">BLACKJACK! You win 6:5 your bet (1.2 times your bet)!</div>);
+         break;
       case "Win":
-         return(<div className="alert alert-success" role="alert">You win! You earned my money$$ :(!</div>);    
+         html =(<div className="alert alert-success" role="alert">You win! You earned my money$$ :(!</div>);   
+         break; 
       case "House Busted":
-         return(<div className="alert alert-success" role="alert">House BUSTED! You win! You earned my money$$ :(!</div>);
+         html = (<div className="alert alert-success" role="alert">House BUSTED! You win! You earned my money$$ :(!</div>);
+         break;
       case "Bust":
          alert("You busted! Let's see what the house had...")
-         return(<div className="alert alert-danger" role="alert">You BUSTED! You lose! Give me your money$$ :)!</div>);
+         html = (<div className="alert alert-danger" role="alert">You BUSTED! You lose! Give me your money$$ :)!</div>);
+         break;
       case "Push":
-         return(<div className="alert alert-info" role ="alert">The hands are equal. Push! Hold on to your money for now... ;)!</div>);
+         html = (<div className="alert alert-info" role ="alert">The hands are equal. Push! Hold on to your money for now... ;)!</div>);
+         break;
       case "Lose":
-         return(<div className="alert alert-danger" role="alert">House had a better hand.You lose! Give me your money$$ :)!</div>);
+         html = (<div className="alert alert-danger" role="alert">House had a better hand.You lose! Give me your money$$ :)!</div>);
+         break;
       case "Done":
          alert("Let's see what the House has.");
-         return<div className="alert alert-info" role="alert">House's turn</div>  
+         html = <div className="alert alert-info" role="alert">House's turn</div>  
+         break;
       default:
-        return(<div className="alert alert-info" role="alert">{this.props.status}</div>);
-        
+         html = (<div className="alert alert-info" role="alert">{this.props.status}</div>);
     }
+
+    return(
+      <div class="container status">
+        <div class="row">
+          <div class="col-xs-3 col-xs-offset-9">
+            {html}
+          </div>
+        </div>
+      </div>
+    )
  }
 }
 class Hand extends React.Component {
@@ -552,12 +571,11 @@ class Interface extends React.Component {
        <button onClick={this.props.restart} type="button">Restart</button>
        
       </div>
-      <div>
-        <Result status={this.props.status}/>
-      </div>
-        <h3>
-          Player Hand Score: {this.props.playerscore}
-        </h3>
+      <h3>
+            Player Hand Score: {this.props.playerscore}
+      </h3>
+      <div class="playerInfo">
+        
         <div>
           Player Wins: {this.props.tally}
         </div>
@@ -567,7 +585,10 @@ class Interface extends React.Component {
         <div>
           Player Bet Locked In: ${this.props.bet}
         </div>
-       
+      </div>
+        <div>
+        <Result status={this.props.status}/>
+        </div>
       </div>
     );
   }

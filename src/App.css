@@ -27,19 +27,63 @@
   to { transform: rotate(360deg); }
 } */
 
+.main {
+  width: 100vw;
+  height: 100vh;
+}
+
+.info {
+  margin-top: -20px;
+  border: 5px solid black;
+  /* list-style-position: inside; */
+  text-align: left;
+  background: white;
+}
+.rules {
+  /* border: 1px solid black; */
+  min-height: 20vh;
+}
+
+/* .instructions {
+  border: 1px solid black;
+  min-height: 50vh;
+} */
+
+.wrapper {
+  /* border: 1px solid black; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+.playerInfo {
+  float:left;
+  margin-top: -95px;
+  font-size: 20px;
+  margin-left: -100px;
+}
+
+.status {
+  /* display:flex; 
+  align-items: center; 
+  justify-content:center;  */
+  margin: -95px;
+  float:right;
+}
+
 .hand{
   height:auto;
   overflow: auto;
 }
 
-.interface{
+/* .interface{
   height:auto;
   overflow:auto;
   margin: 25px 0px;
   background: rgba(0,0,0,0.1);
   border-radius: 5px;
   padding: 10px;
-}
+} */
 .card{
   display: inline-block;
   height: 242.6669922pt;
@@ -50,37 +94,14 @@
 body{
    background: green;
    text-align: center;
+   overflow-y: hidden;
 }
-
-
-.rules {
-  position: absolute;
-  margin-top: -293px;
-  margin-right: 80px;
-  border-style: solid;
-  border-width: 5px;
-  text-align: left;
-  width: 25%;
-  height: 29.5%;
-
-}
-
-body h3 {
-  margin-top: -5px;
-
-}
-
-.instructions {
-  margin-top: -10px;
-  list-style-position: inside;
-  text-align: left;
-  margin-left: 500px;
-  margin-bottom: 100px;
-}
-
 h1 {
   font-weight: bold;
-  font-size: 75px;
+  font-size: 70px;
 }
+
+
+
 
 
