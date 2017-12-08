@@ -1,28 +1,28 @@
-/* .App {
+ /* .App {
   text-align: center;
-}
+} */
 
-.App-logo {
+ .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
-}
+} 
 
-.App-header {
+/* .App-header {
   background-color: #222;
   height: 150px;
   padding: 20px;
   color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
 } */
 
-/* @keyframes App-logo-spin {
+/* .App-title {
+  font-size: 1.5em;
+} */
+
+/* .App-intro {
+  font-size: large;
+} */ */
+/* 
+@keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 } */
@@ -49,26 +49,15 @@
   min-height: 50vh;
 } */
 
+.status{
+  width: 60vh;
+}
 .wrapper {
   /* border: 1px solid black; */
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 80vh;
-}
-.playerInfo {
-  float:left;
-  margin-top: -95px;
-  font-size: 20px;
-  margin-left: -100px;
-}
-
-.status {
-  /* display:flex; 
-  align-items: center; 
-  justify-content:center;  */
-  margin: -95px;
-  float:right;
 }
 
 .hand{
@@ -83,23 +72,27 @@
   background: rgba(0,0,0,0.1);
   border-radius: 5px;
   padding: 10px;
-} */
+}  */
+
 .card{
   display: inline-block;
-  height: 242.6669922pt;
-  width: 167.0869141pt;
-  margin: 10px;
+  height: 96px;
+  width: 71px;
+  margin-left: 10px;
+  margin-top: 20px;
 }
+
 
 body{
    background: green;
    text-align: center;
-   overflow-y: hidden;
+   /* overflow-y: hidden; */
 }
 h1 {
   font-weight: bold;
-  font-size: 70px;
+  font-size: 50px;
 }
+
 
 
 

@@ -317,6 +317,8 @@ class Game extends React.Component {
     
     } 
 
+  
+
     //set state to initial settings to play a new game
     this.setState({
       deck: newDeck,
@@ -325,6 +327,8 @@ class Game extends React.Component {
       status: "Let's get started!",
       lockedIn: false
     })
+
+    this.openModal();
 
   
     
@@ -411,6 +415,7 @@ class Game extends React.Component {
           || this.state.status === "Push" || this.state.status === "Lose" || this.state.status === "Win" )
            ?  <Hand hand={this.state.houseHand} dealer={false} status={this.state.status}/>
            :  <Hand hand={this.state.houseHand} dealer={true} status={this.state.status}/>
+           
           }
          {/* <Hand hand={this.state.houseHand} dealer={true} status={this.state.status}/> */}
           <Interface
@@ -506,7 +511,9 @@ class Result extends React.Component {
     return(
       <div class="container status">
         <div class="row">
-          <div class="col-xs-3 col-xs-offset-9">
+          {/* <div class="col-sm-3">
+          </div> */}
+          <div class="center-block">
             {html}
           </div>
         </div>
@@ -541,8 +548,8 @@ class Card extends React.Component {
     /*(this.props.hidden) ? 'url(svg-cards/hidden.png' 
     :*/
     const cardImage = this.props.value + '_of_' + this.props.face;
-    var url = require('./svg-cards/' + cardImage + '.svg');
-    var urlHidden = require('./svg-cards/hidden.png');
+    var url = require('./card-BMPs/' + cardImage + '.bmp');
+    var urlHidden = require('./card-BMPs/back.bmp');
     var cardBackground =
       (this.props.hidden) 
       ? 'url(' + urlHidden + ')'
@@ -568,13 +575,15 @@ class Interface extends React.Component {
        <button disabled={true} onClick={this.props.doubleDown} type="button">Double Down</button>
        <button disabled={true} type="button">Split</button>
        <button>Advice</button>
-       <button onClick={this.props.restart} type="button">Restart</button>
+       <button onClick={this.props.restart} type="button">Next Round</button>
        
       </div>
       <h3>
-            Player Hand Score: {this.props.playerscore}
+          Player Hand Score: {this.props.playerscore}
       </h3>
       <div class="playerInfo">
+        
+        <Result status={this.props.status}/>
         
         <div>
           Player Wins: {this.props.tally}
@@ -582,13 +591,9 @@ class Interface extends React.Component {
         <div>
           Player Bank: ${this.props.playerBank}
         </div>
-        <div>
-          Player Bet Locked In: ${this.props.bet}
-        </div>
+        
       </div>
-        <div>
-        <Result status={this.props.status}/>
-        </div>
+       
       </div>
     );
   }
