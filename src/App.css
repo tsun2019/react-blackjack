@@ -1,11 +1,11 @@
  /* .App {
   text-align: center;
 } */
-
+/* 
  .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
-} 
+}  */
 
 /* .App-header {
   background-color: #222;
@@ -39,19 +39,17 @@
   text-align: left;
   background: white;
 }
+
 .rules {
   /* border: 1px solid black; */
   min-height: 20vh;
 }
 
-/* .instructions {
-  border: 1px solid black;
-  min-height: 50vh;
-} */
-
 .status{
-  width: 60vh;
+  width: 64vh;
+  margin-top: 7px;
 }
+
 .wrapper {
   /* border: 1px solid black; */
   display: flex;
@@ -65,21 +63,21 @@
   overflow: auto;
 }
 
-/* .interface{
+ /* .interface{
   height:auto;
   overflow:auto;
   margin: 25px 0px;
   background: rgba(0,0,0,0.1);
   border-radius: 5px;
   padding: 10px;
-}  */
+}   */
 
 .card{
   display: inline-block;
-  height: 96px;
-  width: 71px;
-  margin-left: 10px;
-  margin-top: 20px;
+  height: 160px;
+  width: 118px;
+  margin-left: 20px;
+  margin-top: 10px;
 }
 
 
@@ -90,7 +88,17 @@ body{
 }
 h1 {
   font-weight: bold;
-  font-size: 50px;
+  font-size: 40px;
+}
+
+.houseScore {
+  margin-top: 2px;
+  font-size: 20px;
+}
+
+.playerScore {
+  margin-top: -7px;
+  font-size: 20px;
 }
 
 
