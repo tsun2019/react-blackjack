@@ -117,13 +117,13 @@ class Game extends React.Component {
   }
 
   //handle modals
-  openModal() {
+  openModal = () => {
     this.setState({
       modalIsOpen: true
     });
   }
 
-  closeModal() {
+  closeModal = () => {
     this.setState({
       modalIsOpen: false
     });
@@ -133,10 +133,10 @@ class Game extends React.Component {
   //create functions to handle certain events (dealing,hit,stand,restart,advice)
 
   handleScore = (hand) => {
-    var score = 0;
-    var hasAce = false;
+    let score = 0;
+    let hasAce = false;
 
-    for(var i = 0; i < hand.length; i++){
+    for(let i = 0; i < hand.length; i++){
       score += hand[i].v;
       if (hand[i].f === "c1" || hand[i].f === "d1" || hand[i].f === "h1" || hand[i].f === "s1"){
         hasAce = true;
@@ -153,14 +153,14 @@ class Game extends React.Component {
   }
 
   handleHouseScore = (hand) => {
-    var score = 0;
-    var hasAce = false;
+    let score = 0;
+    let hasAce = false;
     
     if (this.state.status === "Let's get started!"){
       return score; 
     }
 
-    for(var i = 0; i < hand.length; i++){
+    for(let i = 0; i < hand.length; i++){
       score += hand[i].v;
       if (hand[i].f === "c1" || hand[i].f === "d1" || hand[i].f === "h1" || hand[i].f === "s1"){
         hasAce = true;
@@ -202,10 +202,10 @@ class Game extends React.Component {
     const newDeck = [...this.state.deck];
     const newPlayerHand = [...this.state.playerHand];
     const newHouseHand = [...this.state.houseHand];
-    var bet = this.state.bet;
-    var tally = this.state.tally;
-    var playerBank = this.state.playerBank;
-    var newStatus = "Playing..."
+    let bet = this.state.bet;
+    let tally = this.state.tally;
+    let playerBank = this.state.playerBank;
+    let newStatus = "Playing..."
 
     //deal
     newPlayerHand.push(newDeck.pop());
@@ -239,9 +239,9 @@ class Game extends React.Component {
   handleHit = () => {
     const newDeck = [...this.state.deck];
     const playerHand = [...this.state.playerHand];
-    var status = this.state.status;
-    var tally = this.state.tally;
-    var playerBank = this.state.playerBank;
+    let status = this.state.status;
+    let tally = this.state.tally;
+    let playerBank = this.state.playerBank;
     
     //deal card
     playerHand.push(newDeck.pop());
@@ -280,8 +280,8 @@ class Game extends React.Component {
   //double down
   handleDoubleDown = () => {
     const playerHand = [...this.state.playerHand];
-    var status = this.state.status;
-    var bet = this.state.bet;
+    let status = this.state.status;
+    let bet = this.state.bet;
     
     // multiply bet by two since doubling down
     bet *= 2;
@@ -338,9 +338,9 @@ class Game extends React.Component {
   const newDeck = [...this.state.deck];
   const houseHand = [...this.state.houseHand];
   const playerHand = [...this.state.playerHand];
-  var tally = this.state.tally;
-  var status = this.state.status;
-  var bank = parseInt(this.state.playerBank,10);
+  let tally = this.state.tally;
+  let status = this.state.status;
+  let bank = parseInt(this.state.playerBank,10);
 
   while (this.handleScore(houseHand) < 17){
     houseHand.push(newDeck.pop());
@@ -475,7 +475,7 @@ class Game extends React.Component {
 // component to help figure out when to hit and stuff
 class Result extends React.Component {
   render(){
-    var html;
+    let html;
     
     switch(this.props.status) {
       case "Playing...":
@@ -548,13 +548,13 @@ class Card extends React.Component {
     /*(this.props.hidden) ? 'url(svg-cards/hidden.png' 
     :*/
     const cardImage = this.props.value + '_of_' + this.props.face;
-    var url = require('./card-BMPs/' + cardImage + '.bmp');
-    var urlHidden = require('./card-BMPs/back.bmp');
-    var cardBackground =
+    let url = require('./card-BMPs/' + cardImage + '.bmp');
+    let urlHidden = require('./card-BMPs/back.bmp');
+    let cardBackground =
       (this.props.hidden) 
       ? 'url(' + urlHidden + ')'
       : 'url(' + url + ')';
-    var card = {backgroundImage: cardBackground};
+    let card = {backgroundImage: cardBackground};
     return (
       <div className='card' style={card}/>
     )
